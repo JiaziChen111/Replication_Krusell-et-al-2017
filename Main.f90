@@ -5,7 +5,7 @@ program RepKrusell
 
   integer, parameter :: maxIter = 100
   integer :: iter
-  real(8), parameter :: adj_KL = 0.25d0, adj_T = 0.5d0, adj_avgz = 0.5d0, &
+  real(8), parameter :: adj_KL = 0.1d0, adj_T = 0.5d0, adj_avgz = 0.5d0, &
                         tol_KL = 0.01, tol_T = 1.0d-4, tol_avgz = 0.001
   real(8) :: start, finish, t_start, t_finish, error_KL, error_T, error_avgz
 
@@ -55,6 +55,7 @@ program RepKrusell
     KLratio = adj_KL*new_KLratio + (1.d0-adj_KL)*KLratio
     T = adj_T*new_T + (1.d0-adj_T)*T
     average_z = adj_avgz*new_average_z + (1.d0-adj_avgz)*average_z
+    call Prices(KLratio, int_rate, wage)
 
     ! Check errors and tolerance
     if ((error_KL.lt.tol_KL).and.(error_T.lt.tol_T).and.(error_avgz.lt.tol_avgz)) then
